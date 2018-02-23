@@ -1,13 +1,24 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // Set pg config
-var pg = require('pg');
-var prefix;
+const pg = require('pg');
+const conString = 'postgres://postgres:postgres@localhost/item-catalog';
+
+const client = new pg.Client(conString)
+client.connect()
+const prefix;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    // res.render('index', { category: 'Express' });
+router.get('/', (req, res, next) => {
+    client.query('SELECT * FROM users', (err, result) => {
+        // done();
+        if (err) {
+            console.log('Error running the query');
+        }
+        res.send(result);
+        client.end();
+    });
 });
 
 // Displays items in a specific category
