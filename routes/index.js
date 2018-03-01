@@ -11,20 +11,27 @@ const prefix;
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    client.query('SELECT * FROM users', (err, result) => {
+    client.query('SELECT * FROM category', (err, result) => {
         // done();
         if (err) {
             console.log('Error running the query');
         }
-        res.send(result);
+        // Create an array to hold the categories retrieved from the db
+        var categories = [];
+        // Loop through the result and save the category name to categories
+        for (var i = 0; i < result.rows.length; i++) {
+            categories.push(result.rows[i]['name']);
+        }
+        // res.send(categories);
+        res.render('index', { categories: categories });
         client.end();
     });
 });
 
 // Displays items in a specific category
 router.get('/:category', function(req, res, next) {
-    req.params.category = 'games';
-    prefix = "This page returns " + req.params.category
+    // req.params.category = 'games';
+    prefix = "This page returns " //+ req.params.category
     res.render('index', { prefix: prefix });
 });
 
