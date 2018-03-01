@@ -2,4 +2,11 @@ extends layout
 
 block content
   h1= title
-  p #{prefix}
+  //- p= categories
+  ul
+    each category in categoriesList
+      a(href='/' + category)
+        li= category
+       
+      
+  //- p some plain content
