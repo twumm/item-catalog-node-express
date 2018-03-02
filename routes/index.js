@@ -6,10 +6,9 @@ const pg = require('pg');
 const conString = 'postgres://postgres:postgres@localhost/item-catalog';
 
 const client = new pg.Client(conString)
-client.connect()
-const prefix;
+client.connect();
 const title = 'Item Catalog Web App';
-var category;
+var category, item;
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -34,8 +33,6 @@ router.get('/', (req, res, next) => {
 router.get('/:category', (req, res, next) => {
     category = req.params.category;
     client.query('SELECT * FROM items WHERE category=$1', [category], (err, result) => {
-        // done();
-
         if (err) {
             console.log('Error running the query');
         }
@@ -70,7 +67,17 @@ router.delete(':category/delete-category', (req, res, next) => {
 
 // Display items in detail - description
 router.get('/:category/:item', (req, res, next) => {
-
+    category = req.params.category;
+    item = req.params.item;
+    client.query(('SELECT description FROM items WHERE name=$1'), [item], (err, result) => {
+        if (err) {
+            console.log('Error running query', err)
+        }
+        var description = result.rows[0]['description'];
+        // res.send(result.rows[0]);
+        // console.log(description);
+        res.render('specificItem', { category: category, item: item, description: description })
+    })
 });
 
 // Add an item to a category
