@@ -8,6 +8,8 @@ const conString = 'postgres://postgres:postgres@localhost/item-catalog';
 const client = new pg.Client(conString)
 client.connect()
 const prefix;
+const title = 'Item Catalog Web App';
+var category;
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -17,22 +19,38 @@ router.get('/', (req, res, next) => {
             console.log('Error running the query');
         }
         // Create an array to hold the categories retrieved from the db
-        var categories = [];
+        var categoriesList = [];
         // Loop through the result and save the category name to categories
         for (var i = 0; i < result.rows.length; i++) {
-            categories.push(result.rows[i]['name']);
+            categoriesList.push(result.rows[i]['name']);
         }
         // res.send(categories);
-        res.render('index', { categories: categories });
+        res.render('index', { title: title, categoriesList: categoriesList });
         client.end();
     });
 });
 
 // Displays items in a specific category
 router.get('/:category', function(req, res, next) {
-    // req.params.category = 'games';
-    prefix = "This page returns " //+ req.params.category
-    res.render('index', { prefix: prefix });
+    category = req.params.category;
+    client.query('SELECT * FROM items WHERE category=$1', [category], (err, result) => {
+        // done();
+
+        if (err) {
+            console.log('Error running the query');
+        }
+        // Create an array to hold the items retrieved from the db
+        var itemsList = [];
+        // Loop through the result and save the item names to the itemsList
+        for (var i = 0; i < result.rows.length; i++) {
+            itemsList.push(result.rows[i]['name']);
+        }
+        // res.send(result);
+        res.render('specificCategory', { category: category, itemsList: itemsList });
+        client.end();
+    });
+    // res.render('specificCategory', { category: category });
+    // res.send(category);
 });
 
 // Adds a new category
