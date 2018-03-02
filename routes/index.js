@@ -26,7 +26,7 @@ router.get('/', (req, res, next) => {
         }
         // res.send(categories);
         res.render('index', { title: title, categoriesList: categoriesList });
-        client.end();
+        // client.end();
     });
 });
 
@@ -47,7 +47,7 @@ router.get('/:category', function(req, res, next) {
         }
         // res.send(result);
         res.render('specificCategory', { category: category, itemsList: itemsList });
-        client.end();
+        // client.end();
     });
     // res.render('specificCategory', { category: category });
     // res.send(category);
