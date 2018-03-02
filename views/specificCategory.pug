@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p= category
-//-   ul
-//-     each category in categoriesList
-//-       a(href='/' + category)
-//-         li= category
+  h1 Item Catalog - #{category} 
+  p Items
+  ul
+    each item in itemsList
+      a(href='/' + category + '/' + item)
+        li= item
