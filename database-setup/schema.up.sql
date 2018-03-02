@@ -14,7 +14,8 @@ CREATE TABLE items (
     id serial primary key,
     name varchar(80),
     description varchar(1000),
-    category_id integer references category(id),
+    category varchar(80),
+    category_id integer references category(id) on delete cascade,
     user_id integer references users(id) on delete cascade
 );
 -- ALTER TABLE category
