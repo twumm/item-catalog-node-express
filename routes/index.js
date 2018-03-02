@@ -31,7 +31,7 @@ router.get('/', (req, res, next) => {
 });
 
 // Displays items in a specific category
-router.get('/:category', function(req, res, next) {
+router.get('/:category', (req, res, next) => {
     category = req.params.category;
     client.query('SELECT * FROM items WHERE category=$1', [category], (err, result) => {
         // done();
@@ -54,32 +54,37 @@ router.get('/:category', function(req, res, next) {
 });
 
 // Adds a new category
-router.post('/add-category', function(req, res, next) {
+router.post('/add-category', (req, res, next) => {
     // res.render('index', { category: 'Express' });
 });
 
 // Edits a category
-router.put(':category/edit-category', function(req, res, next) {
+router.put(':category/edit-category', (req, res, next) => {
     // res.render('index', { category: 'Express' });
 });
 
-// Deletes a category
-router.delete(':category/delete-category', function(req, res, next) {
+// Delete a category
+router.delete(':category/delete-category', (req, res, next) => {
     // res.render('index', { category: 'Express' });
 });
 
-// Adds an item to a category
-router.post(':category/add-item', function(req, res, next) {
+// Display items in detail - description
+router.get('/:category/:item', (req, res, next) => {
+
+});
+
+// Add an item to a category
+router.post(':category/add-item', (req, res, next) => {
     // res.render('index', { category: 'Express' });
 });
 
 // Edits an item in a category
-router.put(':category/:item/edit-item', function(req, res, next) {
+router.put(':category/:item/edit-item', (req, res, next) => {
     // res.render('index', { category: 'Express' });
 });
 
 // Deletes an item from a category
-router.delete(':category/:item/delete-item', function(req, res, next) {
+router.delete(':category/:item/delete-item', (req, res, next) => {
     // res.render('index', { category: 'Express' });
 });
 
