@@ -51,8 +51,16 @@ router.get('/:category', (req, res, next) => {
 });
 
 // Adds a new category
-router.post('/add-category', (req, res, next) => {
+router.post('/addCategory', (req, res, next) => {
+    // client.query('INSERT INTO category(name, user_id) VALUES($1, $2)', [req.body.categoryName, 1], (err, result) => {
+    //         if (err) {
+    //             console.log('Error running query', err);
+    //         }
+    //         res.send(result);
+    //         // res.redirect('index');
+    //     })
     // res.render('index', { category: 'Express' });
+    res.render('addCategory');
 });
 
 // Edits a category
